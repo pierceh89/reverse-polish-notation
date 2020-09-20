@@ -1,0 +1,36 @@
+plugins {
+    id 'java'
+    id 'antlr'
+}
+
+group 'io.github.pierceh89'
+version '1.0-SNAPSHOT'
+
+sourceCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    antlr "org.antlr:antlr4:4.5"
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+}
+
+sourceSets {
+    main {
+        java {
+            srcDirs = ["src/main/java", "src/generated/antlr"]
+        }
+    }
+}
+
+generateGrammarSource {
+    outputDirectory = file("src/generated/antlr")
+//    arguments += ['-package', 'com.kakaoenterprise.tapaas.antlr']
+    arguments += ['-visitor']
+}
+
+clean.doFirst {
+    delete("src/generated")
+}
